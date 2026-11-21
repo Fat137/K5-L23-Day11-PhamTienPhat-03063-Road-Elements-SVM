@@ -3,13 +3,13 @@
   "format": "CVAT for images 1.1",
   "guideline": "Road v1.0",
   "name": "phamtienphat",
-  "revision": 1,
-  "created_at": "2026-11-20T19:49:48+00:00",
+  "revision": 2,
+  "created_at": "2026-11-21T07:17:59+00:00",
   "files": [
     {
       "file": "phamtienphat-front.zip",
-      "bytes": 6332,
-      "sha256": "1090631656943b7004910fff00454f75d1709766eb7ab801985179beea60900a",
+      "bytes": 6403,
+      "sha256": "d0091b6b23fb960bd4e3d49f5372ad9679107d0eede25bf5408a6e8c18e89409",
       "contains_images": false,
       "images": 16,
       "images_unlabelled": 0,
@@ -25,8 +25,8 @@
     },
     {
       "file": "phamtienphat-fisheye.zip",
-      "bytes": 4935,
-      "sha256": "e18a6e43154f84af974b037f9359fd2a95c62229fa411e6bf520263a3bd158d0",
+      "bytes": 5141,
+      "sha256": "1d8bcbc7e8f273e55c53cddef5111a36733d35abfe2fcd650d9b972dc3c69aba",
       "contains_images": false,
       "images": 12,
       "images_unlabelled": 0,
@@ -35,7 +35,7 @@
         "crosswalk": 15,
         "drivable": 7,
         "lane": 6,
-        "road_curb": 8,
+        "road_curb": 13,
         "traffic_light": 6,
         "traffic_sign": 4
       }

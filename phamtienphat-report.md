@@ -1,8 +1,8 @@
 # Báo cáo cá nhân — Ngày 11
 Họ tên: Phạm Tiến Phát      Mã học viên: 03063  
 Phiên bản CVAT (Help → About): 2.74.1  
-Guideline: Road v1.0    Lần nộp (`revision` trong manifest): 1  
-Thời điểm export (ngày giờ trên CVAT): 21/11/2026 02:49    Số lần nộp lại sau Rework: 0  
+Guideline: Road v1.0    Lần nộp (`revision` trong manifest): 2  
+Thời điểm export (ngày giờ trên CVAT): 21/11/2026 14:17 (revision 1: 21/11/2026 02:49)    Số lần nộp lại sau Rework: 1  
 
 ## 1. Kiểm project
 | Mục | Đúng như guideline Road v1.0? | Ghi chú |
@@ -19,7 +19,7 @@ Cách đặt tag ảnh trên bản CVAT này: công cụ Tag ở thanh bên trá
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | front | 12 | 26 | 3 | 4 | 22 | 17 | 11 |
 | front-extra (đã làm 4 / 4) | 4 | 11 | 0 | 2 | 8 | 6 | 10 |
-| fisheye | 8 | 6 | 4 | 11 | 5 | 6 | 4 |
+| fisheye | 8 | 6 | 9 | 11 | 5 | 6 | 4 |
 | fisheye-extra (đã làm 4 / 4) | 4 | 0 | 4 | 4 | 2 | 0 | 0 |
 
 ## 3. Bảng ca khó
@@ -34,23 +34,33 @@ Cách đặt tag ảnh trên bản CVAT này: công cụ Tag ở thanh bên trá
 | A12 | lane | chỉ gán L1, để trống R1 | Bên phải gần xe không thấy vạch; lint báo QC1-02, cần coach xác nhận |
 | A08 | traffic_light vỏ vàng (3 đèn) | facing side hay back | side, color unknown | Mép vỏ có các chụp che nắng nhô ra kiểu nhìn nghiêng; không thấy mắt đèn nên không biết màu |
 | A10 | drivable làn trái (L1 trắng liền) | alternative hay không | alternative | Guideline gán theo "đi được nếu đường trống", không xét luật chuyển làn; làn có ô tô chạy |
+| B04 | lane (vạch trắng liền cạnh làn bus, camera sau) | gán lane hay bỏ; nếu gán thì position nào | chưa gán, hỏi coach | Quang nêu trong Phiếu QC 1; trên camera sau trái/phải ảnh bị đảo nên chưa chắc position |
 | B03 | lane position (camera sau) | theo hướng xe (trái ảnh = R1) | position tính theo làn đang đi của xe; camera sau nhìn ngược nên trái/phải bị đảo |
 | B07 | drivable | không gán drivable | Làn xe đạp, ô tô không chạy vào |
 | B11 | lane | không gán lane | Guideline: vạch ô đỗ không gán lane (bẫy QC1-03); ảnh chỉ có tag |
 
 ## 4. Phiếu QC 1 nhận được
-Bạn kiểm lô của tôi: không có  Quyết định nhận được: không có  
-Buổi lab không ghép cặp đổi lô nên tôi không nhận được Phiếu QC 1 nào; lô nộp ở revision 1, chưa có lần nộp lại sau Rework.
+Bạn kiểm lô của tôi: Nguyễn Văn Quang  Quyết định nhận được: Rework (1 lỗi nặng; lỗi chính 5 / 60 nhãn = 8,3 %)  
+Mẫu Quang kiểm: A05, A06, A09, A12, B04, B06 (revision 1).
 
 | Mã lỗi | Số lỗi | Đồng ý? | Đã sửa? |
 | --- | ---: | --- | --- |
-| — | — | — | — |
+| QC1-03 (B06, lane `other` dọc dải bê tông) | 1 | Không. Phóng to thấy các đoạn sơn trắng nằm trên mặt đường ở chân dải bê tông, nên đây là vạch sơn chứ không phải mép bê tông; giữ `lane` | Không sửa |
+| QC1-07 (A05, `direct` lấn dải đỗ bên phải) | 1 | Không. Kéo mép trái xe đỗ (x ≈ 790, y ≈ 335) về điểm tụ thì ở đáy ảnh dải đỗ bắt đầu từ x ≈ 1180; biên `direct` dừng ở x ≈ 1150, đã nằm ngoài dải đỗ | Không sửa |
+| QC1-07 (A12, `direct` dừng ở vạch ngựa vằn) | 1 | Có. Mặt đường sau vạch ngựa vằn vẫn "đi được nếu đường trống", và A06 đã vẽ qua vạch ngựa vằn | Đã sửa: kéo `direct` qua vạch ngựa vằn tới hàng xe đỗ hai bên |
+| QC1-06 (A12, L1 ghi `white`) | 1 | Không. L1 đặt trên các vệt đứt màu trắng (RGB ≈ 220, 240, 230); vạch vàng là vạch khác nằm sát vạch ngựa vằn | Không sửa |
+| QC1-09 (A12, biển một chiều mép trái gán `prohibitory`) | 1 | Có. One Way thuộc nhóm `mandatory` | Đã sửa: `group = mandatory` |
+| QC1-04 (B04, R1 chỉ là đoạn ngắn ở xa) | 1 | Một phần. Vạch đứt chỉ có ở xa, gần xe là chữ BUS nên không kéo dài được; vạch trắng liền cạnh làn bus ghi vào bảng ca khó để hỏi coach | Chỉnh lại hình B04 trên CVAT |
+
+Ca mơ hồ Quang nêu: 7 cảnh báo QC1-02 (A05–A09, A12) chờ coach xác nhận miễn vì không thấy vạch; R1 ở A06 là vạch sơn; tâm hộp ở B04 sát ngưỡng 80 % (biển ≈ 523 px bật `edge_zone`, đèn ≈ 495 px không bật).
+
+Nộp lại revision 2 (21/11/2026): sửa A12 như trên; bổ sung `road_curb` ở B01, B03, B04 và chỉnh `road_curb` B05. Bản revision 1 (hai zip và `phamtienphat-manifest-r1.json`) giữ ở thư mục `r1/`. Tính lại theo phần tôi đồng ý: 0 lỗi nặng, 2 lỗi chính / 60 nhãn = 3,3 % (cả 2 đã sửa ở revision 2).
 
 ## 5. Kiểm file export
 | File | Mở lại được? | Số shape ảnh 1 (job / file) | Số shape ảnh 2 (job / file) | Tag camera có trong XML? |
 | --- | --- | --- | --- | --- |
 | phamtienphat-front.zip | Có (`road_check lint`) | A01: 8 / 8 | A02: 5 / 5 | Có |
-| phamtienphat-fisheye.zip | Có (`road_check lint`) | B01: 3 / 3 | B02: 7 / 7 | Có |
+| phamtienphat-fisheye.zip | Có (`road_check lint`) | B01: 5 / 5 | B02: 7 / 7 | Có |
 
 ## 6. Ảnh chụp màn hình
 1. Tab Labels của project `d11-road-phamtienphat`: 6 label vẽ và 4 label Tag.
