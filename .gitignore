@@ -6,4 +6,7 @@ coach_gt/
 submissions/
 out/
 *.zip
+# file nộp: chỉ chứa annotations.xml, không kèm ảnh
+!phamtienphat-front.zip
+!phamtienphat-fisheye.zip
 .env
